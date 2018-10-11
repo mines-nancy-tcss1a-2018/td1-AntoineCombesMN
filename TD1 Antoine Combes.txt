@@ -1,0 +1,99 @@
+##Problem 16
+
+def solve(a):
+    l=str(a)                               #conversion en 'string'
+    s=0                                    #somme des chiffres de a initialisée à 0
+    for k in range (len(l)):
+        n=l[k]    
+        s=s+int(n)                         #somme des chiffres en convertissant le 'string' en 'int'
+    return(s)
+    
+print(solve(2**1000))
+
+assert solve(2**15) == 26
+    
+##Problem 22
+import os  
+
+print(os.listdir("U:\Documents\COMBES_Antoine"))            
+
+os.chdir("U:\Documents\COMBES_Antoine")
+
+fichier = open('namespb22.txt','r')                      #commandes pour localiser et ouvrir le fichier texte nécessaire
+
+L=[]
+for lignes in fichier:       
+    lignes=lignes.replace('"','')
+    L.append(lignes.split(','))                          #on adapte ce fichier texte 
+    
+
+M=sorted(L[0])                                           #on trie par ordre alphabétique les noms
+
+
+alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZ'                    
+
+
+def solve():
+    Stot=0                                      
+    for i in range(len(M)):
+        S=0
+        nom=M[i] 
+        l=len(nom)
+        for k in range (l):
+            S=S+1+alphabet.find(nom[k])                 #on somme la valeur de chaque lettre du nom grâce à la fonction alphabet.find(Lettre)
+        Stot=Stot+S*(i+1)                               #on multiplie cette somme par la position du nom pour obtenir le score total du nom
+    return(Stot)
+
+print(solve())
+
+    
+fichier.close()
+
+
+
+
+
+##Problème 55
+
+def palindrome(n):                         #cette sous fonction test si un nombre est palindromique ou non (renvoie True ou False)
+    p=str(n)
+    cond=True
+    i=0
+    l=len(p)
+    if l==1:
+        cond=False
+    while cond==True and i<l/2:
+        if p[i]==p[l-1-i]:
+            cond=True
+            i=i+1
+        else:
+            cond=False
+    return(cond)   
+    
+assert palindrome(1551)==True
+        
+def reverse(n):                           #cette sous fonction inverse un nombre ex reverse(1454)=4541       
+    p=str(n)
+    res=''
+    for chiffre in p:
+        res=chiffre+res
+    return(int(res))
+        
+
+def solve(n): 
+    c=0                                   #compteur d'itération
+    f=0                                   #compteur des nombes de Lychrel
+    for k in range(1,n+1):                
+        k=k+reverse(k)
+        while palindrome(k)==False and c<50:      #tant que le nombre d'itération est inférieur à 50 et tant que l'on à pas un palindrome on continue le procédé
+            k=k+reverse(k)
+            c=c+1
+        if c==50:
+            f=f+1
+        c=0
+    return(f)
+    
+print(solve(10000))
+
+
+
